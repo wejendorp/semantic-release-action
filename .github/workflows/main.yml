@@ -1,0 +1,66 @@
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Build and test
+    steps:
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v2
+
+      - name: ⎔ Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14
+          registry-url: 'https://npm.pkg.github.com'
+
+      - name: 📥 Download deps
+        uses: bahmutov/npm-install@v1
+        with:
+          useLockFile: false
+
+      - name: ▶️ Run validate script
+        run: npm run validate
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    if: ${{ !github.event.fork &&
+      contains('refs/heads/master,refs/heads/beta,refs/heads/next,refs/heads/alpha',
+      github.ref) && github.event_name == 'push' }}
+    steps:
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v2
+
+      - name: ⎔ Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14
+          registry-url: 'https://npm.pkg.github.com'
+
+      - name: 📥 Download deps
+        uses: bahmutov/npm-install@v1
+        with:
+          useLockFile: false
+
+      - name: 🏗 Run build script
+        run: npm run --if-present build
+
+      - name: 🚀 Release
+        uses: ./ # Uses an action in the root directory
+        id: semantic-release
+        with:
+          branches: |
+            [
+              '+([0-9])?(.{+([0-9]),x}).x',
+              'master',
+              'next',
+              'next-major',
+              {name: 'beta', prerelease: true},
+              {name: 'alpha', prerelease: true}
+            ]
+          registry: https://npm.pkg.github.com/
+          npm_publish: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
