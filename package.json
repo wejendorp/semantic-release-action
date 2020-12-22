@@ -1,5 +1,5 @@
 {
-	"name": "@wejendorp/gh-action",
+	"name": "@wejendorp/semantic-release-action",
 	"version": "1.0.0",
 	"description": "",
 	"main": "index.js",
@@ -9,15 +9,15 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/wejendorp/gh-action.git"
+		"url": "git+https://github.com/wejendorp/semantic-release-action.git"
 	},
 	"keywords": [],
 	"author": "",
 	"license": "ISC",
 	"bugs": {
-		"url": "https://github.com/wejendorp/gh-action/issues"
+		"url": "https://github.com/wejendorp/semantic-release-action/issues"
 	},
-	"homepage": "https://github.com/wejendorp/gh-action#readme",
+	"homepage": "https://github.com/wejendorp/semantic-release-action#readme",
 	"dependencies": {
 		"@actions/core": "^1.2.6",
 		"@actions/exec": "^1.0.4",
