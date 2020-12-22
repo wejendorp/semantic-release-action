@@ -33,7 +33,7 @@ const release = async () => {
 		],
 	});
 
-	const npmPublish = core.getInput(inputs.npm_publish);
+	const npmPublish = core.getInput(inputs.npm_publish) === 'true';
 	const registry =
 		core.getInput(inputs.registry) || 'https://registry.npmjs.com/';
 
