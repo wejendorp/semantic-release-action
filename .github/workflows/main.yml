@@ -1,9 +1,11 @@
+name: Test & release
+
 on: [push]
 
 jobs:
   build:
-    runs-on: ubuntu-latest
     name: Build and test
+    runs-on: ubuntu-latest
     steps:
       - name: ⬇️ Checkout repo
         uses: actions/checkout@v2
@@ -23,6 +25,7 @@ jobs:
         run: npm run validate
 
   release:
+    name: Release
     needs: build
     runs-on: ubuntu-latest
     if: ${{ !github.event.fork &&
