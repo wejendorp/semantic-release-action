@@ -5,7 +5,7 @@ const exec = util.promisify(require('child_process').exec);
 const run = async () => {
 	// Install Dependencies
 	{
-		const { stdout, stderr } = await exec('npm ci --only=prod', {
+		const { stdout, stderr } = await exec('npm ci --only=prod --silent', {
 			cwd: path.resolve(__dirname),
 		});
 		console.log(stdout);
