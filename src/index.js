@@ -39,7 +39,9 @@ const release = async () => {
 
 	if (result.nextRelease && npmPublish) {
 		await exec.exec(
-			`npm publish --tag=${result.nextRelease.channel} --registry=${registry}`,
+			`npm publish --tag=${
+				result.nextRelease.channel || 'latest'
+			} --registry=${registry}`,
 		);
 	}
 
