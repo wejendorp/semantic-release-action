@@ -29,20 +29,18 @@ exports.handleBranchesOption = () => {
 
 /**
  * Handle DryRun Option
- * @returns {{}|{dryRun: boolean}}
  */
 exports.handleDryRunOption = () => {
 	const dryRun = core.getInput(inputs.dry_run);
 
 	switch (dryRun) {
 		case 'true':
-			return { dryRun: true };
+			// skip CI check in dry run mode
+			return { dryRun: true, noCi: true };
 
 		case 'false':
-			return { dryRun: false };
-
 		default:
-			return {};
+			return { dryRun: false };
 	}
 };
 
