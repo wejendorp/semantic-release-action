@@ -63,7 +63,7 @@ jobs:
               {name: 'alpha', prerelease: true}
             ]
           registry: https://npm.pkg.github.com/
-          npm_publish: false
+          npm_publish: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

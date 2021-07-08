@@ -25,6 +25,11 @@ const release = async () => {
 		process.env.GITHUB_EVENT_NAME = 'totally-not-a-pr';
 		process.env.GITHUB_REF = 'master';
 	}
+	const npmPublish = core.getInput(inputs.npm_publish) === 'true';
+	const registry =
+		core.getInput(inputs.registry) || 'https://registry.npmjs.com/';
+
+	process.env.NPM_CONFIG_REGISTRY = registry;
 	const result = await semanticRelease({
 		...handleBranchesOption(),
 		...handleDryRunOption(),
@@ -35,7 +40,7 @@ const release = async () => {
 			[
 				'@semantic-release/npm',
 				{
-					npmPublish: true,
+					npmPublish,
 				},
 			],
 			'@semantic-release/github',
