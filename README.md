@@ -39,4 +39,24 @@ steps:
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  - name: 🚀 Dry run release
+    uses: wejendorp/semantic-release-action@v1
+    with:
+      branches: |
+        [
+          '+([0-9])?(.{+([0-9]),x}).x',
+          'master',
+          'next',
+          'next-major',
+          {name: 'beta', prerelease: true},
+          {name: 'alpha', prerelease: true}
+        ]
+      registry: https://npm.pkg.github.com/
+      # Dry run and publish the changelog as a Check
+      dry_run: true
+      check_name: Semantic release
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
